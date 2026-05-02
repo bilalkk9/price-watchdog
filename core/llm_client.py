@@ -50,7 +50,7 @@ def ask_gemini(prompt: str, system_instruction: Optional[str] = None) -> str:
                 if config_kwargs
                 else None,
             )
-            time.sleep(2)   # respect free-tier rate limit between calls
+            time.sleep(5)   # respect free-tier rate limit (gemini-2.0-flash: 15 RPM)
             return response.text or ""
 
         except Exception as exc:
