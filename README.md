@@ -148,5 +148,6 @@ Price Watchdog follows the **ReAct (Reasoning + Acting)** architecture:
 
 ## University Project
 
-**Domain:** Artificial Intelligence / Web Programming / Web Automation  
-**Supervisor:** Faizan Tahir — fazitahir@vu.edu.pk
+**University:** Virtual University of Pakistan  
+**Student:** Muhammad Bilal — BC230207969  
+**Domain:** Artificial Intelligence / Web Programming / Web Automation
