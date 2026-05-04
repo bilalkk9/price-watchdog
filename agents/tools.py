@@ -5,13 +5,16 @@ from typing import Optional
 
 from crewai.tools import tool
 
+from config import GMAIL_ADDRESS
 from core.database import (
+    add_alert,
     add_price_check,
     get_all_products,
     get_latest_price,
     get_price_history,
     get_product_by_url,
     init_db,
+    update_product,
 )
 from core.llm_client import extract_product_info
 from core.notifier import notify
@@ -132,16 +135,21 @@ def check_history_tool(product_url: str) -> str:
 @tool("Save Price Check")
 def save_price_check_tool(
     product_url: str,
+    product_name: str,
     price: float,
     currency: str,
     variant: str,
     availability: str,
     reasoning: str,
 ) -> str:
-    """Save the result of this price check to the database."""
+    """Save the result of this price check to the database. Also updates the product name."""
     product = get_product_by_url(product_url)
     if not product:
         return f"SAVE_FAILED: Product not found for URL {product_url!r}. Add it first."
+
+    # Update product name if we now know it and it was missing
+    if product_name and not product.get("name"):
+        update_product(product["id"], name=product_name)
 
     check_id = add_price_check(
         product_id=product["id"],
@@ -180,6 +188,22 @@ def send_notification_tool(
         target_price=target_price,
         availability=availability,
         reasoning=reasoning,
+        recipient_email=GMAIL_ADDRESS if GMAIL_ADDRESS else None,
         currency=currency,
     )
+
+    # Save the alert to the database so the Alerts page shows it
+    product = get_product_by_url(product_url)
+    if product:
+        alert_type = "target_reached" if new_price <= target_price else "back_in_stock"
+        add_alert(
+            product_id=product["id"],
+            alert_type=alert_type,
+            old_price=old,
+            new_price=new_price,
+            drop_pct=drop_percentage,
+            message=reasoning[:500],
+            sent_via=channels,
+        )
+
     return f"Notification sent via: {channels}"

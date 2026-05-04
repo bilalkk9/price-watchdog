@@ -13,7 +13,7 @@ from agents.tools import (
 from config import GEMINI_API_KEY
 
 _llm = LLM(
-    model="gemini/gemini-2.0-flash",
+    model="gemini/gemini-2.5-flash",
     api_key=GEMINI_API_KEY,
     temperature=0.1,   # low temp for consistent, factual extraction
 )

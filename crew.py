@@ -41,6 +41,7 @@ def run_price_check(
         tasks=[task],
         process=Process.sequential,
         verbose=True,
+        max_rpm=4,  # stay under gemini-2.5-flash free tier limit of 5 RPM
     )
 
     result = crew.kickoff()

@@ -27,7 +27,7 @@ MAX_RETRIES = 3
 MAX_PAGE_CHARS = 20000        # ~5000 tokens; keeps Gemini free-tier safe
 
 # Gemini model
-GEMINI_MODEL = "gemini-2.0-flash"
+GEMINI_MODEL = "gemini-2.5-flash"
 
 # Notification
 DEFAULT_CURRENCY = "PKR"

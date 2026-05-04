@@ -27,7 +27,7 @@ Follow these steps IN ORDER — do not skip any:
    - Confirm availability status.
 4. **Compare price** — use the Compare Price tool with the extracted price and target {target_price:,.0f} {currency}.
 5. **Check history** — use the Check Price History tool to see if the price changed since last check.
-6. **Save check** — use the Save Price Check tool to record this check in the database.
+6. **Save check** — use the Save Price Check tool. Pass the extracted product_name so the database is updated.
 7. **Send notification** — if Compare Price returned ALERT (price at or below target),
    OR if the product was previously Out of Stock and is now In Stock,
    use the Send Notification tool.
